@@ -11,22 +11,34 @@ const Contents = () => {
                 label: "일본 누적 확진자",
                 backgroundColor: "salmon",
                 fill: true,
-                data: [10, 5, 3]
+                data: [5, 5, 10]
             },
-
-
         ]
     })
-
     useEffect(()=>{
         const fetchEvents = async ()=>{
             const res = await axios.get("https://api.covid19api.com/total/dayone/country/jp")
-            console.log(res)
+            makeData(res.data)
+        }
+        const makeData = (items)=>{
+            const arr = items.reduce((acc, cur)=>{
+                const currentDate = new Date(cur.date);
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth();
+                const date = currentDate.getDate();
+                const confirmed = cur.Confirmed;
+                const active = cur.Active;
+                const death = cur.Death;
+                const Recovered = cur.Recovered;
+
+
+
+                console.log(year, month, date)
+                return acc;
+            }, [])
         }
         fetchEvents()
     })
-
-
     return (
             <section>
                 <h2>국내 코로나 현황</h2>
